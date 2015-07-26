@@ -49,7 +49,7 @@ sub build_box()
 
 
 ## delta theta angle for each cell (scint tile + steel plate) 
-my $in_delta_theta = 2.5*pi/180.; ## tune this para to be a smaller one
+my $in_delta_theta = 1.25*pi/180.; ## tune this para to be a smaller one
 # minmum theta angle
 my $in_theta_min = -12.5*pi/180.;
 
@@ -64,7 +64,7 @@ my $in_tile_angle = 32.*pi/180.;
 my @hcal_in_halfbox = (248.5, 11.25, 0.5*202.89+1); 
 
 my $in_abs_pDz = 0.5*202.89;
-my $in_abs_pTheta = 0.585;  ### calculated with absorber dims
+my $in_abs_pTheta = 0.563;  ### calculated with absorber dims
 my $in_abs_pPhi = 0;
 my $in_abs_pDy1 = 0.5*12.59*sin(54.8*pi/180.);
 my $in_abs_pDx1 = $hcal_in_halfbox[0]-1;
@@ -107,10 +107,10 @@ sub build_hcal_in()
 {
 	#### contruct holder boxes for each cell
 	my %detector;
-	for (my $inbox=1; $inbox<=20; $inbox++){
+	for (my $inbox=0; $inbox<20; $inbox++){
 		my $inbox_posX = 0.;
-		my $inbox_posY = $hcal_in_radimid*sin($in_theta_min+$inbox*$in_delta_theta/2.);
-		my $inbox_posZ = $hcal_in_radimid*cos($in_theta_min+$inbox*$in_delta_theta/2.) - $offset;
+		my $inbox_posY = $hcal_in_radimid*sin($in_theta_min+$inbox*$in_delta_theta+$in_delta_theta/2.);
+		my $inbox_posZ = $hcal_in_radimid*cos($in_theta_min+$inbox*$in_delta_theta+$in_delta_theta/2.) - $offset;
 		%detector=init_det();
                 $detector{"name"} = "$DetectorName\_$box_name\_HCalIn_$inbox";
                 $detector{"mother"} = "$DetectorName\_$box_name";
@@ -180,9 +180,9 @@ sub build_hcal_in()
 
 
 ## delta theta angle for each cell (scint tile + steel plate) 
-my $out_delta_theta = 3.*pi/180.; ## tune this para to be a smaller one
+my $out_delta_theta = 1.35*pi/180.; ## tune this para to be a smaller one
 # minmum theta angle
-my $out_theta_min = -15.*pi/180.;
+my $out_theta_min = -13.5*pi/180.;
 
 # 1830 is the inner radius, 2685 is outer radius
 my @hcal_out_radi = (1830, 2685);
@@ -192,7 +192,7 @@ my $out_tile_angle = 12.*pi/180.;
 my @hcal_out_halfbox = (488.5, 25.5, 0.5*831.+1); 
 
 my $out_abs_pDz = 0.5*(27.1*cos(74.72*pi/180.)+823.);
-my $out_abs_pTheta = 0.575;  ### calculated with absorber dims
+my $out_abs_pTheta = 0.563;  ### calculated with absorber dims
 my $out_abs_pPhi = 0;
 my $out_abs_pDy1 = 0.5*27.1*sin(74.72*pi/180.);
 my $out_abs_pDx1 = $hcal_out_halfbox[0]-1;
@@ -233,10 +233,10 @@ my $out_scint_mat = "ScintillatorB";
 sub build_hcal_out()
 {
 	my %detector;
-	for (my $outbox=1; $outbox<=20; $outbox++){
+	for (my $outbox=0; $outbox<20; $outbox++){
 		my $outbox_posX = 0.;
-		my $outbox_posY = $hcal_out_radimid*sin($out_theta_min+$outbox*$out_delta_theta/2.);
-		my $outbox_posZ = $hcal_out_radimid*cos($out_theta_min+$outbox*$out_delta_theta/2.) - $offset;
+		my $outbox_posY = $hcal_out_radimid*sin($out_theta_min+$outbox*$out_delta_theta+$out_delta_theta/2.);
+		my $outbox_posZ = $hcal_out_radimid*cos($out_theta_min+$outbox*$out_delta_theta+$out_delta_theta/2.) - $offset;
 		%detector=init_det();
                 $detector{"name"} = "$DetectorName\_$box_name\_HCalOut_$outbox";
                 $detector{"mother"} = "$DetectorName\_$box_name";
@@ -267,7 +267,7 @@ sub build_hcal_out()
                 $detector{"dimensions"} = "$out_abs_pDz*mm $out_abs_pTheta*deg $out_abs_pPhi*deg $out_abs_pDy1*mm $out_abs_pDx1*mm $out_abs_pDx2*mm $out_abs_pAlp1*deg $out_abs_pDy2*mm $out_abs_pDx3*mm $out_abs_pDx4*mm $out_abs_pAlp2*mm";
                 $detector{"material"} = $out_abs_mat;
 		$detector{"rotation"} = "0*deg 0*deg 0*deg";
-		#$detector{"visible"} = "1";
+		$detector{"visible"} = "1";
 		$detector{"sensitivity"} = "no";
 		$detector{"hit_type"}    = "no";
 		$detector{"identifiers"} = "no";
